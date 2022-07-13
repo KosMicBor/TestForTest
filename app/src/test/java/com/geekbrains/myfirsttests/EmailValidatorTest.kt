@@ -17,6 +17,11 @@ class EmailValidatorTest {
     }
 
     @Test
+    fun emailValidator_CorrectEmailWithNumbers_ReturnsTrue() {
+        assertTrue(EmailValidator.isValidEmail("123@123.com"))
+    }
+
+    @Test
     fun emailValidator_InvalidEmailNoTld_ReturnsFalse() {
         assertFalse(EmailValidator.isValidEmail("name@email"))
     }
@@ -39,5 +44,30 @@ class EmailValidatorTest {
     @Test
     fun emailValidator_NullEmail_ReturnsFalse() {
         assertFalse(EmailValidator.isValidEmail(null))
+    }
+
+    @Test
+    fun emailValidator_EmptyDomainAndNoTld_ReturnsFalse() {
+        assertFalse(EmailValidator.isValidEmail("name@"))
+    }
+
+    @Test
+    fun emailValidator_EmptyDomain_ReturnsFalse() {
+        assertFalse(EmailValidator.isValidEmail("name@.com"))
+    }
+
+    @Test
+    fun emailValidator_EmptyDomainAndDoubleDot_ReturnsFalse() {
+        assertFalse(EmailValidator.isValidEmail("name@..com"))
+    }
+
+    @Test
+    fun emailValidator_WrongLanguage_ReturnsFalse() {
+        assertFalse(EmailValidator.isValidEmail("имя@домен.ру"))
+    }
+
+    @Test
+    fun emailValidator_WrongLanguageInPartOfMail_ReturnsFalse() {
+        assertFalse(EmailValidator.isValidEmail("name@домен.ru"))
     }
 }
